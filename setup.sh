@@ -6,4 +6,5 @@ do
   mkdir -v $dir
   touch $dir/day$i.js
   touch $dir/input.txt
+  touch $dir/README.md
 done
