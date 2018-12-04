@@ -10,7 +10,7 @@ let count = 0;
 input.forEach((element) => {
     let split = element.split('@');
 
-    ids.push(split[0].trim()); // Left of @, trimmed
+    ids.push(split[0].trim().replace('#', '')); // Left of @, trimmed
     offsets.push(split[1].split(':')[0].trim()); // Between @ and :, trimmed
     sizes.push(split[1].split(':')[1].trim()); // Right of :, trimmed
 });
@@ -44,6 +44,30 @@ for (let i = 0; i < matrix.length; i++) {
         if (matrix[i][j] >= 2) {
             count++;
         }
+    }
+}
+
+for (let i = 0; i < input.length; i++) {
+    let leftOffset = parseInt(offsets[i].split(',')[0]); // Left of ,
+    let topOffset = parseInt(offsets[i].split(',')[1]); // Right of ,
+
+    let width = parseInt(sizes[i].split('x')[0]); // Left of ,
+    let height = parseInt(sizes[i].split('x')[1]); // Right of ,
+
+    let isOverlapping = false;
+
+    // Populate matrix
+    for (let w = leftOffset; w < leftOffset + width; w++) {
+        for (let h = topOffset; h < topOffset + height; h++) {
+            if(matrix[w][h] > 1 || matrix[w][h] === 0) {
+                isOverlapping = true;
+            }
+        }
+    }
+
+    if (!isOverlapping) {
+        console.log('Part 2: ' + ids[i]);
+        break;
     }
 }
 
